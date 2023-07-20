@@ -2,13 +2,13 @@
 
 personal discord bot to automate tasks on discord application
 
-### adding new commands
+# adding new commands
 
-# adding
+### adding
 
 add new file under src/commands/new_command.ts
 
-# deploying commands
+### deploying
 
 > npm run deploy:commands
 
