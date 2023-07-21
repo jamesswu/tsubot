@@ -19,11 +19,20 @@ const getData = async (encounter: string) => {
     // await page.click('#data-centre-filter > Aether')
     await page.select('select#data-centre-filter', 'Aether');
     await page.type(inputSelector, 'dragonsong');
-    const listings = await page.evaluate(() => {
-      Array.from(document.querySelectorAll('.listing'), e => {
-        
-      } )
+    const listings = await page.waitForSelector('#listings');
+    console.log('listings?',listings);
+    const items = await listings?.evaluateHandle(() => {
+      Array.from(document.querySelectorAll('#listings > .listing'), (el) => (
+        {
+          duty: el.querySelector('.left .duty')?.textContent
+        }))
     })
+    const body = await page.evaluateHandle(() => {
+      return document.body;
+    })
+    console.log("body?",body);
+
+    console.log("items?",items);
     await browser.close();
   } catch (error) {
     console.error(error);
