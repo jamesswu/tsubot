@@ -67,4 +67,27 @@ const getData = async (encounter: string) => {
   }
 }
 
+function encounterHandler( encounter: string) {
+  switch(encounter) {
+    case 'ucob':
+      return 'The Unending Coil of Bahamut';
+      break;
+    case 'uwu':
+      return 'The Weapon\'s Refrain';
+      break;
+    case 'tea':
+      return 'The Epic of Alexander';
+      break;
+    case 'dsr':
+      return 'Dragonsong\'s Reprise';
+      break;
+    case 'top':
+      return 'The Omega Protocol';
+      break;
+    default:
+      return ''
+      break;
+  }
+}
+
 export default getData;
