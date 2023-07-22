@@ -19,20 +19,48 @@ const getData = async (encounter: string) => {
     // await page.click('#data-centre-filter > Aether')
     await page.select('select#data-centre-filter', 'Aether');
     await page.type(inputSelector, 'dragonsong');
-    const listings = await page.waitForSelector('#listings');
-    console.log('listings?',listings);
-    const items = await listings?.evaluateHandle(() => {
-      Array.from(document.querySelectorAll('#listings > .listing'), (el) => (
-        {
-          duty: el.querySelector('.left .duty')?.textContent
-        }))
-    })
-    const body = await page.evaluateHandle(() => {
-      return document.body;
-    })
-    console.log("body?",body);
+    await page.waitForSelector('#listings');
 
-    console.log("items?",items);
+    const listings = await page.evaluate(() => {
+      const array = Array.from(document.querySelectorAll('.listing'), (el) => ({
+        duty: el.querySelector('.left .duty')?.textContent,
+        creator: el.querySelector('.right .creator .text')?.textContent,
+        world: el.querySelector('.right .world .text')?.textContent,
+        expires_In: el.querySelector('.right .expires .text')?.textContent,
+        updated_At: el.querySelector('.right .updated .text')?.textContent
+      }))
+      return array;
+    })
+    console.log(listings);
+    // const items = await listings?.evaluate(() => {
+    //   Array.from(listings, (el => {
+
+    //   }))
+
+
+    //   const temp = await listings?.evaluate(el => ({
+    //     duty: el.querySelector('.left .duty')?.textContent,
+    //     creator: el.querySelector('.right .creator .text')?.textContent,
+    //     world: el.querySelector('.right .world .text')?.textContent,
+    //     expires: el.querySelector('.right .expires .text')?.textContent
+    //   }))
+    //   console.log('temp?',temp)
+
+    // })
+    // const items = await listings?.evaluate(el => (
+    //   {
+
+    //   }
+    // ))
+    // console.log('items?',items  )
+
+    // const items = await page.evaluate(() => {
+    //   const dutys = Array.from(document.querySelectorAll('.duty')).map(el => el.textContent);
+    //   const creators = Array.from(document.querySelectorAll('.creator')).map(el => el.textContent);
+    //   const worlds = Array.from(document.querySelectorAll('.world')).map(el => el.textContent);
+    //   const expires = Array.from(document.querySelectorAll('.expires')).map(el => el.textContent);
+    // })
+
     await browser.close();
   } catch (error) {
     console.error(error);
