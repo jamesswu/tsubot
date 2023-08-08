@@ -1,29 +1,8 @@
 import { Embed, SlashCommandBuilder } from 'discord.js'
 import type { CommandInteraction } from 'discord.js';
 import { EmbedBuilderWrapper } from '../utils/embed';
+import axios from 'axios';
 
-const encounterHandler = (encounter: string) =>  {
-  switch(encounter) {
-    case 'ucob':
-      return 'The Unending Coil of Bahamut';
-      break;
-    case 'uwu':
-      return '';
-      break;
-    case 'tea':
-      return 'The Epic of Alexander';
-      break;
-    case 'dsr':
-      return 'Dragonsong\'s Reprise';
-      break;
-    case 'top':
-      return 'The Omega Protocol';
-      break;
-    default:
-      return ''
-      break;
-  }
-}
 
 const data = new SlashCommandBuilder()
   .setName("pf")
@@ -32,14 +11,16 @@ const data = new SlashCommandBuilder()
     option.setName('encounter')
       .setDescription("the encounter you want to check")
       .addChoices(
-        {name: 'ucob', value: 'The Unending Coil of Bahamut'},
-        {name: 'uwu', value: 'The Weapon\'s Refrain'},
-        {name: 'tea', value: 'The Epic of Alexander'},
-        {name: 'dsr', value: 'Dragonsong\'s Reprise'},
-        {name: 'top', value: 'The Omega Protocol'}
+        {name: 'ucob', value: 'ucob'},
+        {name: 'uwu', value: 'uwu'},
+        {name: 'tea', value: 'tea'},
+        {name: 'dsr', value: 'dsr'},
+        {name: 'top', value: 'top'}
       ));
 const execute = async (interaction:any) => {
   const encounter = interaction.options.getString('encounter');
+  const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/ditto`);
+  console.log(response.data);
   const embed = EmbedBuilderWrapper();
   return await interaction.reply({embeds: [embed]});
 }

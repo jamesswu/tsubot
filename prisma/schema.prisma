@@ -9,3 +9,22 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+model Listing {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  creator     String
+  duty        String
+  description String
+  world       String
+  expires_In  String
+  updated_At  String
+  party       Role[]
+}
+
+model Role {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  filled    Boolean
+  slot      String
+  Listing   Listing? @relation(fields: [listingId], references: [id])
+  listingId String?  @db.ObjectId
+}
