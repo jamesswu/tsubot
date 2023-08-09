@@ -16,8 +16,8 @@ model Listing {
   duty        String
   description String
   world       String
-  expires_In  String
-  updated_At  String
+  expires  String
+  updated  String
   party       Role[]
 }
 

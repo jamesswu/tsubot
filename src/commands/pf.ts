@@ -8,7 +8,7 @@ const data = new SlashCommandBuilder()
   .setName("pf")
   .setDescription("Check FFXIV party finder listings")
   .addStringOption(option =>
-    option.setName('encounter')
+    option.setName('duty')
       .setDescription("the encounter you want to check")
       .addChoices(
         {name: 'ucob', value: 'ucob'},
@@ -18,10 +18,11 @@ const data = new SlashCommandBuilder()
         {name: 'top', value: 'top'}
       ));
 const execute = async (interaction:any) => {
-  const encounter = interaction.options.getString('encounter');
-  const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/ditto`);
-  console.log(response.data);
-  const embed = EmbedBuilderWrapper();
+  const duty = interaction.options.getString('duty');
+  
+  const response = await axios.get(`http://127.0.0.1:8000/${duty}`);
+  const listings = response.data
+  const embed = EmbedBuilderWrapper(listings);
   return await interaction.reply({embeds: [embed]});
 }
 
