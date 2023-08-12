@@ -15,6 +15,7 @@ model Listing {
   creator     String
   duty        String
   description String
+  tags        String
   world       String
   expires  String
   updated  String
