@@ -6,7 +6,8 @@
     "build": "tsc",
     "start": "node built/index.js",
     "dev": "concurrently \"tsc -w\" \"nodemon built/index.js\"",
-    "deploy:commands": "tsc && node built/deploy-commands.js"
+    "deploy:commands": "tsc && node built/deploy-commands.js",
+    "deploy:global": "tsc && node built/deploy-commands.js"
   },
   "keywords": [],
   "author": "",
