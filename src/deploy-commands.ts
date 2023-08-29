@@ -19,8 +19,10 @@ const rest = new REST().setToken(config.DISCORD_TOKEN);
   try {
     console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
-    const data: any = await rest.put(Routes.applicationGuildCommands(config.CLIENT_ID, config.GUILD_ID), { body: commands });
-    console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+    const dev: any = await rest.put(Routes.applicationGuildCommands(config.CLIENT_ID, config.GUILD_ID), { body: commands });
+    const global: any = await rest.put(Routes.applicationCommands(config.CLIENT_ID), {body: commands})
+    console.log(`Successfully reloaded ${dev.length} application (/) dev commands.`);
+    console.log(`Successfully reloaded ${global.length} application (/) global commands.`);
   } catch (error) {
     console.log(error);
   }
