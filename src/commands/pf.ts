@@ -3,12 +3,7 @@ import RoleHandler from '../utils/role';
 import { Embed, SlashCommandBuilder } from 'discord.js'
 import type { ChatInputCommandInteraction} from 'discord.js';
 import axios from 'axios';
-
-type Temp = {
-  name: string
-  value: string
-  inline: boolean
-} | undefined
+import config from '../config';
 
 const data = new SlashCommandBuilder()
   .setName("pf")
@@ -26,10 +21,8 @@ const data = new SlashCommandBuilder()
 const execute = async (interaction:ChatInputCommandInteraction) => {
   const duty = interaction.options.getString('duty');
   
-  const response = await axios.get(`http://127.0.0.1:8080/listings/${duty}`);
+  const response = await axios.get(`${config.XIVSCRAPER_URL}/${duty}`);
   const listings = response.data.data
-
-
 
   if (listings && listings.length) {
     const embedArray = []
@@ -63,7 +56,7 @@ const execute = async (interaction:ChatInputCommandInteraction) => {
         }
         fieldsArray = []
         embedArray.push(embed)
-
+      // constructs an embed of remaining listings that have not been pushed to the array
       } else if (i == listings.length-1) {
         const embed = {
           title: listings[0].duty,
