@@ -8,19 +8,29 @@ import config from '../config';
 const data = new SlashCommandBuilder()
   .setName("pf")
   .setDescription("Check FFXIV party finder listings")
-  .addStringOption(option =>
-    option.setName('duty')
-      .setDescription("the encounter you want to check")
-      .addChoices(
-        {name: 'ucob', value: 'ucob'},
-        {name: 'uwu', value: 'uwu'},
-        {name: 'tea', value: 'tea'},
-        {name: 'dsr', value: 'dsr'},
-        {name: 'top', value: 'top'}
-      ));
+  .addSubcommand(subcommand =>
+    subcommand
+      .setName('ucob')
+      .setDescription('The Unending Coil of Bahamut (Ultimate)'))
+  .addSubcommand(subcommand =>
+    subcommand
+      .setName('uwu')
+      .setDescription('The Weapon\'s refrain (Ultimate)'))
+  .addSubcommand(subcommand =>
+    subcommand
+      .setName('tea')
+      .setDescription('The Epic of Alexander (Ultimate)'))
+  .addSubcommand(subcommand =>
+    subcommand
+      .setName('dsr')
+      .setDescription('Dragonsong\'s Reprise (Ultimate)'))
+  .addSubcommand(subcommand =>
+    subcommand
+      .setName('top')
+      .setDescription('The Omega Protocol (Ultimate)'));
+
 const execute = async (interaction:ChatInputCommandInteraction) => {
-  const duty = interaction.options.getString('duty');
-  
+  const duty = interaction.options.getSubcommand();
   const response = await axios.get(`${config.XIVSCRAPER_URL}/${duty}`);
   const listings = response.data.data
 
