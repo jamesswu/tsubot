@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  tsubot_go:
+    image: golang:1.21
+    container_name: tsubot_go
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - ./xiv-scraper:/usr/src/app
+    working_dir: /usr/src/app
+    networks:
+      - tsubot_network
+    command: bash -c "go run main.go"
+  
+  tsubot_node:
+    image: node:18
+    container_name: tsubot_node
+    restart: unless-stopped
+    tty: true
+    volumes:
+    - ./bot:/usr/src/app
+    working_dir: /usr/src/app
+    networks:
+      - tsubot_network
+    command: bash -c "npm i && npm run build && npm run dev"
+
+networks:
+  tsubot_network:
+    driver: bridge

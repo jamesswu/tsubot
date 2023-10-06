@@ -19,7 +19,6 @@ const data = new SlashCommandBuilder()
 const execute = async (interaction: ChatInputCommandInteraction) => {
   const subcommand = interaction.options.getSubcommand();
   if (subcommand === 'view') {
-
     return await interaction.reply(`${subcommand}`);
   } else if (subcommand === 'add') {
     const modal = new ModalBuilder()

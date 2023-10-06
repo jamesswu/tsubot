@@ -1,3 +1,4 @@
-node_modules
-.env
-built
+/bot/node_modules
+/bot/.env
+/bot/built
+/xiv-scraper/.env
